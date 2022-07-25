@@ -59,6 +59,7 @@ python inClust.py --inputdata=your_data --input_covariates=your_inputcelltype --
 - *training weight*
 results/training.weight
 
+```
 
 **2. Analysis**
 
