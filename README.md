@@ -87,11 +87,13 @@ batch_vector.npy
 ```
 
 - *predictd label for each sample*
+```
 predict_labels.csv
-
+```
 **3. reproduction figures**
+```
 demo_reproducing_figures.ipynb
-
+```
 
 **VAE and its variant implementation**
 https://github.com/bojone/vae
