@@ -55,12 +55,12 @@ python inClust.py --inputdata=data/training_data/Fig4_count_pca_log.npy --input_
 ```
 Testing your own dataset
 python inClust.py --inputdata=your_data --input_covariates=your_inputcelltype --inputcelltype=your_inputcelltype --mode=your_mode
-
 ```
 
 - *training weight*
+```
 results/training.weight
-
+```
 
 
 **2. Analysis**
