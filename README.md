@@ -41,7 +41,7 @@ This repository contains the official Keras implementation of:
 
 
 For supervised mode
-python inClust.py --inputdata=data/training_data/Fig2_scgen_count7000r.npz --input_covariates=data/training_data/Fig2_scgen_study_condition.npy --inputcelltype=data/training_data/Fig2_scgen_cell_type.npy --mode=supervised
+python inClust.py --inputdata=data/training_data/Fig2_PBMC_count7000r.npz --input_covariates=data/training_data/Fig2_PBMC_study_condition.npy --inputcelltype=data/training_data/Fig2_PBMC_cell_type.npy --mode=supervised
 
 For semi_supervised mode
 python inClust.py --inputdata=data/training_data/Fig3_heart_count.npz --input_covariates=data/training_data/Fig3_heart_batch.npy --inputcelltype=data/training_data/Fig3_heart_label_semi.npy --mode=semi_supervised --permute_input=F
@@ -68,7 +68,7 @@ results/training.weight
 The following codes could generate analysis data in the main text.
 ```
 For supervised mode
-python inClust.py --inputdata=data/training_data/Fig2_scgen_count7000r.npz --input_covariates=data/training_data/Fig2_scgen_study_condition.npy --inputcelltype=data/training_data/Fig2_scgen_cell_type.npy --mode=supervised --training=F --weights=data/weights_and_results/Fig2_demo.weight
+python inClust.py --inputdata=data/training_data/Fig2_PBMC_count7000r.npz --input_covariates=data/training_data/Fig2_PBMC_study_condition.npy --inputcelltype=data/training_data/Fig2_PBMC_cell_type.npy --mode=supervised --training=F --weights=data/weights_and_results/Fig2_demo.weight
 
 For semi_supervised mode
 python inClust.py --inputdata=data/training_data/Fig3_heart_count.npz --input_covariates=data/training_data/Fig3_heart_batch.npy --inputcelltype=data/training_data/Fig3_heart_label_semi.npy --mode=semi_supervised --training=F --weights=data/weights_and_results/Fig3_demo.weight
