@@ -79,6 +79,7 @@ python inClust.py --inputdata=data/training_data/Fig4_count_pca_log.npy --input_
 ```
 
 - *Output*
+
 The output is in the results folder, including
 - *two latent space representation*
 ```
