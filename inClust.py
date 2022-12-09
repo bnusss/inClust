@@ -46,8 +46,8 @@ parser.add_argument('--mode', type=str, default='suprevised', help='mode: superv
 
 parser.add_argument('--reconstruction_loss', type=int, default=5, help='The reconstruction loss for VAE')
 parser.add_argument('--kl_cross_loss', type=int, default=1, help='')
-parser.add_argument('--prior_distribution_loss', type=int, default=0, help='The assumption that prior distribution is uniform distribution')
-parser.add_argument('--label_cross_loss', type=int, default=20, help='Loss for integrating label information into the model')
+parser.add_argument('--prior_distribution_loss', type=int, default=1, help='The assumption that prior distribution is uniform distribution')
+parser.add_argument('--label_cross_loss', type=int, default=50, help='Loss for integrating label information into the model')
 
 
 args = parser.parse_args()
@@ -75,18 +75,10 @@ label_cross_loss = args.label_cross_loss
 
 mode = args.mode
 if mode == 'supervised':
-    reconstruction_loss = 5
-    kl_cross_loss = 1
     prior_distribution_loss = 0
-    label_cross_loss = 20
 if mode == 'semi_supervised':
-    reconstruction_loss = 5
-    kl_cross_loss = 1
     prior_distribution_loss = 0
-    label_cross_loss = 50
 if mode == 'unsupervised':
-    reconstruction_loss = 5
-    kl_cross_loss = 1
     prior_distribution_loss = 1
     label_cross_loss = 0
 
@@ -145,7 +137,6 @@ else:
     yh = Dense(z_dim)(batch_information)
 
 label_information = Input(shape=(num_clusters,))
-encoder = Model([x_in, batch_information, label_information], [z_mean, yh])
 
 #decoder
 z1 = Input(shape=(z_dim,))
@@ -167,17 +158,20 @@ def sampling(args):
     return z_mean + K.exp(z_log_var / 2) * epsilon
 
 z1 = Lambda(sampling, output_shape=(z_dim,))([z_mean, z_log_var])
+
+encoder = Model([x_in, batch_information, label_information], [z_mean, z1, yh])
+
 x_recon = decoder(z1)
 
 #vector arithmetic
 def arithmetics(args):
-    z1, yh = args
+    z_local_mean, yh = args
     if arithmetic == 'minus':
-        return z1 - yh
+        return z_local_mean - yh
     else:
-        return z1 + yh
+        return z_local_mean + yh
 
-z = Lambda(arithmetics, output_shape=(z_dim,))([z1, yh])
+z = Lambda(arithmetics, output_shape=(z_dim,))([z_mean, yh])
 y = classfier(z)
 
 #parameter for mean vector of each cluster
@@ -243,7 +237,7 @@ if Training == 'T':
 vae.load_weights(weights)
 means = K.eval(gaussian.mean)
 
-x_train_encoded, y = encoder.predict([data, batch, labels])
+x_train_encoded, x_low_dimension, y = encoder.predict([data, batch, labels])
 print(x_train_encoded.shape)
 print(y.shape)
 if arithmetic == 'minus':
@@ -253,11 +247,7 @@ else:
 
 np.save('results/mean_vector.npy', x_train_encoded)
 np.save('results/batch_vector.npy', y)
-
-#X_embedded = TSNE(n_components=2,
-#                init='random').fit_transform(predict_x_train_encoded)
-#print(X_embedded.shape)
-#np.save('results/3tsne.npy',X_embedded)
+np.save('results/Low_dimnesion_vector.npy', x_low_dimension)
 
 y_train_pred = classfier.predict(predict_x_train_encoded).argmax(axis=1)
 print(y_train_pred.shape)
