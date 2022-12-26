@@ -10,6 +10,9 @@ This repository contains the official Keras implementation of:
 - keras 2.2.4
 - tensorflow 1.11.0
 
+
+**1. Model training**
+
 - *Input*
 ```
 Input1: num_samples * num_genes (--inputdata)
@@ -22,8 +25,6 @@ Input3: num_samples * num_cellytpe (--inputcelltype)
         unsupervised: the num_celltype is a hyperparameter,  and it is the number of cluster categories set by the user
                       zero vector for each sample
 ```
-
-**1. Model training**
 
 - *About this article*
 ```
