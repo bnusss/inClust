@@ -11,6 +11,7 @@ This repository contains the official Keras implementation of:
 - tensorflow 1.11.0
 
 - *Input*
+```
 Input1: num_samples * num_genes (--inputdata)
 Input2: num_samples * num_covarites (--input_covariates)
 Input3: num_samples * num_cellytpe (--inputcelltype)
@@ -20,6 +21,8 @@ Input3: num_samples * num_cellytpe (--inputcelltype)
                          zero vector for sample in the query dataset
         unsupervised: the num_celltype is a hyperparameter,  and it is the number of cluster categories set by the user
                       zero vector for each sample
+```
+
 **1. Model training**
 
 - *About this article*
