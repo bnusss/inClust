@@ -55,7 +55,7 @@ Input3: num_samples * num_cellytpe (--inputcelltype)
 
 
 For supervised mode
-python inClust.py --inputdata=data/training_data/Fig3_PBMC_count7000r.npz --input_covariates=data/training_data/Fig3_PBMC_study_condition.npy --inputcelltype=data/training_data/Fig3_PBMC_cell_type.npy --mode=supervised --label_cross_loss=20
+python inClust.py --inputdata=data/training_data/Fig3_PBMC_count7000r.npz --input_covariates=data/training_data/Fig3_PBMC_study_condition.npy --inputcelltype=data/training_data/Fig3_PBMC_cell_type.npy --mode=supervised
 
 For semi_supervised mode
 python inClust.py --inputdata=data/training_data/Fig5_heart_count.npz --input_covariates=data/training_data/Fig5_heart_batch.npy --inputcelltype=data/training_data/Fig5_heart_label_semi.npy --mode=semi_supervised --permute_input=F
