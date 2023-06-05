@@ -61,8 +61,7 @@ For semi_supervised mode
 python inClust.py --inputdata=data/training_data/Fig5_heart_count.npz --input_covariates=data/training_data/Fig5_heart_batch.npy --inputcelltype=data/training_data/Fig5_heart_label_semi.npy --mode=semi_supervised --permute_input=F
 
 For unsupervised mode
-python inClust.py --inputdata=data/training_data/Fig7_count_pca_log.npy --input_covariates=data/training_data/Fig7_img_rgb_smooth50.npy --inputcelltype=data/training_data/Fig7_label.npy --mode=unsupervised  --arithmetic=plus
-
+python inClust.py --inputdata=data/training_data/Fig7_10X.npy --input_covariates=data/training_data/Fig7_10X_neighbor.npy --inputcelltype=data/training_data/Fig7_10X_label.npy --mode=unsupervised  --activation=tanh --arithmetic=plus --independent_embed=F --training=F --weights=data/weights_and_results/Fig7_10X_demo.weight
 ```
 
 - *Further Explore*
@@ -90,8 +89,8 @@ For semi_supervised mode
 python inClust.py --inputdata=data/training_data/Fig5_heart_count.npz --input_covariates=data/training_data/Fig5_heart_batch.npy --inputcelltype=data/training_data/Fig5_heart_label_semi.npy --mode=semi_supervised --training=F --weights=data/weights_and_results/Fig5_heart_demo.weight
 
 For unsupervised mode
-python inClust.py --inputdata=data/training_data/Fig7_count_pca_log.npy --input_covariates=data/training_data/Fig7_img_rgb_smooth50.npy --inputcelltype=data/training_data/Fig7_label.npy --mode=unsupervised  --arithmetic=plus --training=F --weights=data/weights_and_results/Fig7_demo.weight
 
+python inClust.py --inputdata=data/training_data/Fig7_10X.npy --input_covariates=data/training_data/Fig7_10X_neighbor.npy --inputcelltype=data/training_data/Fig7_10X_label.npy --mode=unsupervised  --arithmetic=plus --independent_embed=F --training=F --weights=data/weights_and_results/Fig7_10X_demo.weight
 ```
 
 - *Output*

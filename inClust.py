@@ -28,13 +28,14 @@ parser = argparse.ArgumentParser(description='inClust')
 parser.add_argument('--inputdata', type=str, default='data/training_data/Fig2_scgen_count7000r.npz', help='address for input data')
 parser.add_argument('--input_covariates', type=str, default='data/training_data/Fig2_scgen_study_condition.npy', help='address for covariate (e.g. batch)')
 parser.add_argument('--inputcelltype', type=str, default='data/training_data/Fig2_scgen_cell_type.npy', help='address for celltype label')
-parser.add_argument('--permute_input', type=str, default='T', help='whether permute the input')
+parser.add_argument('--permute_input', type=str, default='F', help='whether permute the input')
 parser.add_argument('--randoms', type=int, default=30, help='random number to split dataset')
 
 parser.add_argument('--dim_latent', type=int, default=50, help='dimension of latent space')
 parser.add_argument('--dim_intermediate', type=int, default=200, help='dimension of intermediate layer')
 parser.add_argument('--activation', type=str, default='relu', help='activation function: relu or tanh')
 parser.add_argument('--arithmetic', type=str, default='minus', help='arithmetic: minus or plus')
+parser.add_argument('--independent_embed', type=str, default='T', help='embedding mode')
 
 parser.add_argument('--batch_size', type=int, default=500, help='training parameters_batch_size')
 parser.add_argument('--epochs', type=int, default=50, help='training parameters_epochs')
@@ -57,6 +58,7 @@ inputcelltype = args.inputcelltype
 randoms = args.randoms
 permute_input = args.permute_input
 arithmetic = args.arithmetic
+independent_embed = args.independent_embed
 
 z_dim = args.dim_latent
 intermediate_dim = args.dim_intermediate
@@ -126,13 +128,16 @@ x_in = Input(shape=(input_size,))
 x = Dense(intermediate_dim, activation=activation_function)(x_in)
 x = Dense(z_dim, activation=activation_function)(x)
 
-z_mean = Dense(z_dim)(x)
-z_log_var = Dense(z_dim)(x)
+local_z_mean = Dense(z_dim)(x)
+local_z_log_var = Dense(z_dim)(x)
+local_encoder = Model(x_in, [local_z_mean, local_z_log_var])
+
+z_mean, z_log_var = local_encoder(x_in)
 
 #embedding layer
 batch_information = Input(shape=(num_batch,))
-if activation_function == 'tanh':
-    yh = Dense(z_dim, activation='tanh')(batch_information)
+if independent_embed == 'F':
+    yh, _ = local_encoder(batch_information)
 else:
     yh = Dense(z_dim)(batch_information)
 
