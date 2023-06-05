@@ -218,7 +218,10 @@ lamb3 = label_cross_loss
 
 label_loss = K.mean(-label_information * K.log(y + K.epsilon()), 0)
 xent_loss = 0.5 * K.mean((x_in - x_recon) ** 2, 0)
-kl_loss_origin = - 0.5 * (1 + z_log_var - K.square(z_mean - z_prior_mean - yh) - K.exp(z_log_var))
+if arithmetic == 'minus':
+    kl_loss_origin = - 0.5 * (1 + z_log_var - K.square(z_mean - z_prior_mean - yh) - K.exp(z_log_var))
+else:
+    kl_loss_origin = - 0.5 * (1 + z_log_var - K.square(z_mean - z_prior_mean + yh) - K.exp(z_log_var))
 kl_loss = K.mean(K.batch_dot(K.expand_dims(y, 1), kl_loss_origin),0)
 cat_loss = K.mean(y * K.log(y + K.epsilon()), 0)
 vae_loss = lamb * K.sum(xent_loss) + lamb1 * K.sum(kl_loss) +lamb2*K.sum(cat_loss) + lamb3 * K.sum(label_loss)
