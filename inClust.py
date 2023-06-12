@@ -8,10 +8,6 @@ from keras.layers import *
 from keras.models import Model
 from keras import backend as K
 from sklearn.decomposition import PCA
-# import imageio,os
-# from keras.datasets import mnist
-# from keras.datasets import fashion_mnist as mnist
-# from cortex import CortexDataset  #wang
 from sklearn.model_selection import train_test_split
 from keras.utils import to_categorical
 from sklearn.manifold import TSNE
